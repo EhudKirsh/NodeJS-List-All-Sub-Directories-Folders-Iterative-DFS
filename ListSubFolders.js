@@ -15,7 +15,7 @@ const fs=require('fs')
 
         ToTest=ToTest.concat(Contents).flat()
     }
-    console.log(SubFolders)
+    console.log("Folders inside the '"+process.cwd()+"' folder:\n",SubFolders)
     return SubFolders
 }
 ListSubFolders(process.cwd())
