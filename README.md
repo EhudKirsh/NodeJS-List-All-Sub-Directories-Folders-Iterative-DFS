@@ -2,7 +2,6 @@ Iterative method to make an array for infinite layers of folders (folders inside
 
 ```js
 [ListSubFolders.js]
-```
 
 Use process.cwd() for Path if you want to check the current folder where the terminal is open.
 
