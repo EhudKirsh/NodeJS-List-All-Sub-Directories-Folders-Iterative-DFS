@@ -29,6 +29,6 @@ ListSubFolders(process.cwd())
 ```
 Use process.cwd() for Path if you want to check the current folder where the terminal is open.
 
-This is a Depth First Search (DFS), not Breadth First Search (BFS). They both would work just as well, but the order is interesting to note!
+Difference in order of searching and listing - DFS VS BFS:
 ![Image description](/BFS-and-DFS-Algorithms.png)
 Note: this code is so good it even lists hidden folders! (and can be used for that purpose...) If it lists a folder you can't see, now you know why 😉
