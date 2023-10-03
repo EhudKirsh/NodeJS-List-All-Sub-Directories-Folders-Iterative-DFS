@@ -4,11 +4,12 @@ Iterative method to make an array for infinite layers of folders (folders inside
 require('child_process').execSync('cls',{stdio:'inherit'})//console.clear(), but it always works!
 console.log('Executed At: ',Date(),'\n')
 
-const fs=require('fs')
+const StartTime=performance.now()
+,fs=require('fs')
 ,ListSubFolders=Path=>{
     let ToTest=fs.readdirSync(Path).filter(Item=>fs.lstatSync(Item).isDirectory())
     const SubFolders=[]
-    while(ToTest.length!=0){
+    while(ToTest.length>0){
         const Folder=ToTest.at(-1);SubFolders.push(ToTest.pop())//DFS
         /*
             Depth First Search (DFS) is the default method because it uses .at(-1) & .pop() which are faster and more efficient because they check and remove items from the end and don't need to measure the length of an array and reindex each item when one is removed, unlike Breadth First Search (BFS) which uses [0] & .shift().
@@ -20,7 +21,7 @@ const fs=require('fs')
         Contents=Contents.map(SubFolder=>SubFolder=`${Folder}/${SubFolder}`)
         ToTest=ToTest.concat(Contents).flat()
     }
-    console.log(SubFolders.length+' folders across '+SubFolders.map(Path=>Path=Path.split('/').length).reduce((a,b)=>Math.max(a,b))+" layers inside the '"+process.cwd()+"' folder:\n",SubFolders)
+    console.log('Run Time:',parseFloat(((performance.now()-StartTime)/1000).toFixed(3)),'s\n\n',SubFolders.length+' folders across '+SubFolders.map(Path=>Path=Path.split('/').length).reduce((a,b)=>Math.max(a,b))+" layers inside the '"+process.cwd()+"' folder:\n",SubFolders)
     return SubFolders
 }
 ListSubFolders(process.cwd())
