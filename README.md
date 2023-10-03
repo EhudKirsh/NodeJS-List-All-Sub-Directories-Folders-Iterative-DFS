@@ -11,7 +11,7 @@ const fs=require('fs')
     while(ToTest.length!=0){
         const Folder=ToTest.at(-1);SubFolders.push(ToTest.pop())//DFS
         /*
-            Depth First Search (DFS) is the default method because it uses .at(-1) & .pop() which are faster and more efficient because they check and remove items from the end and don't need to meaasure the length of an array and reindex each item when one is removed, unlike Breadth First Search (BFS) which uses [0] & .shift().
+            Depth First Search (DFS) is the default method because it uses .at(-1) & .pop() which are faster and more efficient because they check and remove items from the end and don't need to measure the length of an array and reindex each item when one is removed, unlike Breadth First Search (BFS) which uses [0] & .shift().
             Should you still wish to switch between the methods, I made it easy for you: just uncomment the line below and comment the line above
         */
         // const Folder=ToTest[0];SubFolders.push(ToTest.shift())//BFS
