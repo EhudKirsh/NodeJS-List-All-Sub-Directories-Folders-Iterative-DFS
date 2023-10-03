@@ -1,7 +1,32 @@
 Iterative method to make an array for infinite layers of folders (folders inside folders inside folders, etc):
+```js
+`use strict`
+require('child_process').execSync('cls',{stdio:'inherit'})//console.clear(), but it always works!
+console.log('Executed At: '+Date()+'\n')
 
-https://github.com/EhudKirsh/NodeJS-list-all-sub-directories-folders-Iterative-DFS/blob/c140abdb0e056638a7c2131be923e5d196846c7a/ListSubFolders.js#L1-L23
+const fs=require('fs')
+,ListSubFolders=Path=>{
+    let ToTest=fs.readdirSync(Path).filter(Item=>fs.lstatSync(Item).isDirectory())
+    const SubFolders=[]
+    while(ToTest.length!=0){
+        const Folder=ToTest.at(-1);SubFolders.push(ToTest.pop())//Depth First Search (DFS)
+        /*
+            These .at(-1) & .pop() here make it Depth First Search (DFS).
+            Change these to [0] & .shift() to make it Breadth First Search (BFS).
+            Beware, DFS is faster and more efficient than BFS because .pop() is faster and more efficient than .shift()
+            I made it easy for you if you want to switch between them: just uncomment the line below and comment the line above
+        */
+        // const Folder=ToTest[0];SubFolders.push(ToTest.shift())//Breadth First Search (BFS)
 
+        let Contents=fs.readdirSync(Folder).filter(Item=>fs.lstatSync(`${Folder}/${Item}`).isDirectory())
+        Contents=Contents.map(SubFolder=>SubFolder=`${Folder}/${SubFolder}`)
+        ToTest=ToTest.concat(Contents).flat()
+    }
+    console.log(SubFolders.length+' folders across '+SubFolders.map(Path=>Path=Path.split('/').length).reduce((a,b)=>Math.max(a,b))+" layers inside the '"+process.cwd()+"' folder:\n",SubFolders)
+    return SubFolders
+}
+ListSubFolders(process.cwd())
+```
 Use process.cwd() for Path if you want to check the current folder where the terminal is open.
 
 This is a Depth First Search (DFS), not Breadth First Search (BFS). They both would work just as well, but the order is interesting to note!
