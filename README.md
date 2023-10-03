@@ -2,7 +2,7 @@ Iterative method to make an array for infinite layers of folders (folders inside
 ```js
 `use strict`
 require('child_process').execSync('cls',{stdio:'inherit'})//console.clear(), but it always works!
-console.log('Executed At: '+Date()+'\n')
+console.log('Executed At: ',Date(),'\n')
 
 const fs=require('fs')
 ,ListSubFolders=Path=>{
