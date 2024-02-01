@@ -1,10 +1,15 @@
 <ins>What this programme does:</ins>
 
-Open up a terminal in a certain folder and run this in NodeJS. It'll list (array []) in the console of all the folders inside that folder, and all the folders inside them, through infinite layers (folders inside folders inside folders, etc).
+Open up a terminal in a certain folder and run this in NodeJS.
 
-• The 'name' of each folder and subfolder is simply its relative path to the folder you ran this NodeJS programme from.
+<img src='Example Folder.jpg' width='99%' height='99%'>
+<img src='Terminal Command Line.jpg' width='99%' height='99%'>
 
-• This method is iterative, not recursive, to be most memory-efficient and fastest
+It'll list (array []) in the console of all the folders inside that folder, and all the folders inside them, through infinite layers (folders inside folders inside folders, etc). The 'name' of each folder and subfolder is simply its relative path to the folder you ran this NodeJS programme from.
+
+<img src='Terminal Outcome.jpg' width='99%' height='99%'>
+
+This method is iterative, not recursive, to be most memory-efficient and fastest
 ```js
 `use strict`
 require('child_process').execSync('cls',{stdio:'inherit'})//console.clear(), but it always works!
