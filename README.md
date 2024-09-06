@@ -13,14 +13,22 @@ This method is iterative, not recursive, to be most memory-efficient and fastest
 ```js
 `use strict`
 require('child_process').execSync('cls',{stdio:'inherit'})//console.clear(), but it always works!
-console.log('Executed At: ',Date(),'\n')
+console.log('Executed at: ',Date(),'\n')
 
 const StartTime=performance.now()
 ,fs=require('fs')
+,MaxOccurance=(c,A)=>{// largest number of occurances of a character c in any string in array A
+    let L=A.length,m=A[--L].split(c).length-1
+    while(--L>=0){
+        const n=A[L].split(c).length-1
+        n>m&&(m=n)
+    }
+    return m
+}// e.g. MaxOccurance('/',['Folder','Folder/inside folder','Folder/inside folder/another nested folder']) ➜ 2
 ,ListSubFolders=Path=>{
     let ToTest=fs.readdirSync(Path).filter(Item=>fs.lstatSync(Item).isDirectory())
-    const SubFolders=[]
-    while(ToTest.length>0){
+    ,i=ToTest.length,L=i;const SubFolders=[]
+    while(--i>=0){
         const Folder=ToTest.at(-1);SubFolders.push(ToTest.pop())//DFS
         /*
             Depth First Search (DFS) is the default method because it uses .at(-1) & .pop() which are faster and more efficient because they check and remove items from the end and don't need to measure the length of an array and reindex each item when one is removed, unlike Breadth First Search (BFS) which uses [0] & .shift().
@@ -29,11 +37,11 @@ const StartTime=performance.now()
         // const Folder=ToTest[0];SubFolders.push(ToTest.shift())//BFS
 
         let Contents=fs.readdirSync(Folder).filter(Item=>fs.lstatSync(`${Folder}/${Item}`).isDirectory())
-        Contents=Contents.map(SubFolder=>SubFolder=`${Folder}/${SubFolder}`)
-        ToTest=ToTest.concat(Contents).flat()
+        const j=Contents.length;i+=j;L+=j
+        for(let k=-1;++k<j;)
+            ToTest.push(`${Folder}/${Contents[k]}`)// Contents[k] = SubFolder
     }
-    console.log('Run Time:',parseFloat(((performance.now()-StartTime)/1000).toFixed(3)),'s\n\n',SubFolders.length+' folders across '+SubFolders.map(Path=>Path=Path.split('/').length).reduce((a,b)=>Math.max(a,b))+" layers inside the '"+process.cwd()+"' folder:\n",SubFolders)
-    return SubFolders
+    console.log(L,'folders across',1+MaxOccurance('/',SubFolders),"layers inside the '"+process.cwd()+"' folder:\n",SubFolders,'\n\n'+'Run time:',Number(((performance.now()-StartTime)/1000).toFixed(3)),'s\n')
 }
 ListSubFolders(process.cwd())
 ```
